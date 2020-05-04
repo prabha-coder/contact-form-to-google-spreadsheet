@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <title>Form Try</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    .venz_form_completion {
+      display: none;
+    }
+  </style>
+  
+</head>
+<body>
+
+ <form id="venz_form_form">
+  
+  <div>
+    <label>First Name</label>
+    <input type="text" id="venz_mailtrain_first_name" name="FIRST_NAME" placeholder="first name.." required>
+  </div>
+
+  <div>
+    <label>Email Address</label>
+    <input type="text" id="venz_mailtrain_email" name="EMAIL" placeholder="email.." required>
+  </div>
+
+  <div>
+    <button type="submit"id="venz_formsubmit-form">Submit</button>
+  </div>
+
+</form>
+<div class="venz_form_completion"> Your Subscription is completed !<div>
+
+<script>
+  $.fn.serializeObject = function()
+{
+   var o = {};
+   var a = this.serializeArray();
+   $.each(a, function() {
+       if (o[this.name]) {
+           if (!o[this.name].push) {
+               o[this.name] = [o[this.name]];
+           }
+           o[this.name].push(this.value || '');
+       } else {
+           o[this.name] = this.value || '';
+       }
+   });
+   return o;
+};
+  $( document ).ready( function(){
+  var $form = $('form#venz_form_form'),
+    url = 'https://script.google.com/macros/s/AKfycbyRfiZN7_vYuGeNhLdTog6IR5I_9b2wNeZqjVeMz1XE3e3SoAs/exec'
+
+$('#venz_formsubmit-form').on('click', function(e) {
+  e.preventDefault();
+  if($("input#venz_mailtrain_first_name").val()!="" && $("input#venz_mailtrain_email").val()!="") {
+  var jqxhr = $.ajax({
+    url: url,
+    method: "GET",
+    dataType: "json",
+    data: $form.serializeObject()
+  })
+  $('.venz_form_completion').show();
+  $('#venz_form_form').hide();
+}
+})
+})
+</script>
+
+</body>
+</html>
+
+
+
+
